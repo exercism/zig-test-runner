@@ -35,11 +35,12 @@ mkdir -p "${output_dir}"
 # Build the Docker image
 docker build --rm -t exercism/zig-test-runner .
 
+# TODO: enable --read-only flag
+
 # Run the Docker image using the settings mimicking the production environment
 docker run \
     --rm \
     --network none \
-    --read-only \
     --mount type=bind,src="${solution_dir}",dst=/solution \
     --mount type=bind,src="${output_dir}",dst=/output \
     --mount type=tmpfs,dst=/tmp \
