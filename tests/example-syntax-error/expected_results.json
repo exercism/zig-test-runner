@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "status": "error",
+  "message": "./example_syntax_error.zig:1:16: error: expected token '(', found '^'\npub fn leap1236^&gv13n\n               ^"
+}
