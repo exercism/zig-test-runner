@@ -1,6 +1,6 @@
 FROM alpine:3.13 as builder
 
-ARG VERSION=0.8.1
+ARG VERSION=0.10.1
 ARG RELEASE=zig-linux-x86_64-${VERSION}
 
 RUN apk add --no-cache curl
