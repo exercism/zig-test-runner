@@ -1,4 +1,4 @@
-FROM alpine:3.17 as builder
+FROM alpine:3.18 as builder
 
 ARG VERSION=0.10.1
 ARG RELEASE=zig-linux-x86_64-${VERSION}
@@ -10,7 +10,7 @@ ADD https://ziglang.org/download/${VERSION}/${RELEASE}.tar.xz .
 RUN tar -xvf ${RELEASE}.tar.xz
 RUN mv /tmp/${RELEASE} /opt/zig
 
-FROM alpine:3.17 as runner
+FROM alpine:3.18 as runner
 
 # install packages required to run the tests
 RUN apk add --no-cache bash jq
