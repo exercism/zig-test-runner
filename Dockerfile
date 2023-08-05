@@ -5,6 +5,9 @@ FROM ${REPO}:${IMAGE} AS builder
 ARG VERSION=0.11.0
 ARG RELEASE=zig-linux-x86_64-${VERSION}
 
+# We can't reliably pin the package versions on Alpine, so we ignore the linter warning.
+# See https://gitlab.alpinelinux.org/alpine/abuild/-/issues/9996
+# hadolint ignore=DL3018
 RUN apk add --no-cache curl
 
 WORKDIR /tmp
@@ -15,6 +18,7 @@ RUN tar -xvf ${RELEASE}.tar.xz \
 FROM ${REPO}:${IMAGE} AS runner
 
 # install packages required to run the tests
+# hadolint ignore=DL3018
 RUN apk add --no-cache bash jq
 
 COPY --from=builder /opt/zig/ /opt/zig/
