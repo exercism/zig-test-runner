@@ -13,6 +13,7 @@ RUN apk add --no-cache curl
 WORKDIR /tmp
 ADD https://ziglang.org/download/${VERSION}/${RELEASE}.tar.xz .
 RUN tar -xvf ${RELEASE}.tar.xz \
+    && rm -rf /tmp/${RELEASE}/doc \
     && mv /tmp/${RELEASE} /opt/zig
 
 FROM ${REPO}:${IMAGE} AS runner
