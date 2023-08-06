@@ -7,8 +7,8 @@ RUN apk add --no-cache curl
 
 WORKDIR /tmp
 ADD https://ziglang.org/download/${VERSION}/${RELEASE}.tar.xz .
-RUN tar -xvf ${RELEASE}.tar.xz
-RUN mv /tmp/${RELEASE} /opt/zig
+RUN tar -xvf ${RELEASE}.tar.xz \
+    && mv /tmp/${RELEASE} /opt/zig
 
 FROM alpine:3.18 as runner
 
