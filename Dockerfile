@@ -14,6 +14,7 @@ WORKDIR /tmp
 ADD https://ziglang.org/download/${VERSION}/${RELEASE}.tar.xz .
 RUN tar -xvf ${RELEASE}.tar.xz \
     && rm -rf /tmp/${RELEASE}/doc \
+    && rm -rf /tmp/${RELEASE}/lib/libc/include/any-windows-any \
     && mv /tmp/${RELEASE} /opt/zig
 
 # Initialize a zig cache
