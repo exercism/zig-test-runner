@@ -1,8 +1,12 @@
 .git/
 .appends/
 .github/
+.dockerignore
 .gitattributes
 .gitignore
+CODE_OF_CONDUCT.md
+LICENSE
+README.md
 Dockerfile
 bin/run-in-docker.sh
 bin/run-tests-in-docker.sh
