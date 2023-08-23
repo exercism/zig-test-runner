@@ -31,10 +31,13 @@ FROM ${REPO}:${IMAGE} AS runner
 # hadolint ignore=DL3018
 RUN apk add --no-cache jq
 
-COPY --from=builder /opt/zig/ /opt/zig/
-COPY --from=builder /root/.cache/zig/ /root/.cache/zig/
+RUN addgroup ziggroup \
+    && adduser --disabled-password --gecos ziggy --ingroup ziggroup ziggy
+COPY --from=builder --chown=ziggy:ziggroup /opt/zig/ /opt/zig/
+COPY --from=builder --chown=ziggy:ziggroup /root/.cache/zig/ /home/ziggy/.cache/zig/
 ENV PATH=$PATH:/opt/zig
 
+USER ziggy:ziggroup
 WORKDIR /opt/test-runner
-COPY bin/run.sh bin/run.sh
+COPY --chown=ziggy:ziggroup bin/run.sh bin/run.sh
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
