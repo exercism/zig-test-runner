@@ -16,6 +16,18 @@ RUN tar -xvf ${RELEASE}.tar.xz \
     && rm -rf /tmp/${RELEASE}/doc \
     && mv /tmp/${RELEASE} /opt/zig
 
+# install packages required to use `bin/run.sh`
+# hadolint ignore=DL3018
+RUN apk add --no-cache bash jq
+ENV PATH=$PATH:/opt/zig
+WORKDIR /opt/test-runner
+COPY bin/run.sh bin/run.sh
+# Initialize a zig cache
+COPY tests/example-success/example_success.zig init-zig-cache/
+COPY tests/example-success/test_example_success.zig init-zig-cache/
+RUN bin/run.sh example-success init-zig-cache init-zig-cache \
+    && rm -rf init-zig-cache/
+
 FROM ${REPO}:${IMAGE} AS runner
 
 # install packages required to run the tests
@@ -23,11 +35,9 @@ FROM ${REPO}:${IMAGE} AS runner
 RUN apk add --no-cache bash jq
 
 COPY --from=builder /opt/zig/ /opt/zig/
+COPY --from=builder /root/.cache/zig/ /root/.cache/zig/
 ENV PATH=$PATH:/opt/zig
 
 WORKDIR /opt/test-runner
-COPY . .
-# Initialize a zig cache
-RUN bin/run.sh hello-world init-zig-cache init-zig-cache \
-    && rm -rf init-zig-cache/
+COPY bin/run.sh bin/run.sh
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
