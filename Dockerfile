@@ -27,4 +27,6 @@ ENV PATH=$PATH:/opt/zig
 
 WORKDIR /opt/test-runner
 COPY . .
+RUN zig test init-zig-cache/test_hello_world.zig \
+    && rm -rf init-zig-cache/
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
