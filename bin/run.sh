@@ -47,7 +47,7 @@ if [ ${exit_code} -eq 0 ]; then
     jq -n '{version: 1, status: "pass"}' > "${results_file}"
 else
     # Sanitize the output
-    sanitized_test_output=$(printf "${test_output}" | sed -n -e '/error: the following test command failed/q;p')
+    sanitized_test_output=$(printf '%s' "${test_output}" | sed -n -e '/error: the following test command failed/q;p')
 
     # Try to distinguish between failing tests and errors
     if [[ ${sanitized_test_output} =~ "error:" ]]; then
