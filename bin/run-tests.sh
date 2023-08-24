@@ -29,9 +29,8 @@ for test_dir in tests/*; do
     done
 
     echo "${test_dir_name}: comparing results.json to expected_results.json"
-    diff "${results_file_path}.tmp" "${expected_results_file_path}.tmp"
 
-    if [ $? -ne 0 ]; then
+    if ! diff "${results_file_path}.tmp" "${expected_results_file_path}.tmp"; then
         exit_code=1
     fi
 
