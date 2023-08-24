@@ -28,7 +28,7 @@ FROM ${REPO}:${IMAGE} AS runner
 
 # install packages required to run the tests
 # hadolint ignore=DL3018
-RUN apk add --no-cache bash jq
+RUN apk add --no-cache jq
 
 COPY --from=builder /opt/zig/ /opt/zig/
 COPY --from=builder /root/.cache/zig/ /root/.cache/zig/
