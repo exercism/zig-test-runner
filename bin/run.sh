@@ -36,7 +36,7 @@ pushd "${solution_dir}" > /dev/null
 
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
-test_output=$(zig test $test_file 2>&1)
+test_output=$(zig test "${test_file}" 2>&1)
 exit_code=$?
 
 popd > /dev/null
@@ -44,7 +44,7 @@ popd > /dev/null
 # Write the results.json file based on the exit code of the command that was 
 # just executed that tested the implementation file
 if [ ${exit_code} -eq 0 ]; then
-    jq -n '{version: 1, status: "pass"}' > ${results_file}
+    jq -n '{version: 1, status: "pass"}' > "${results_file}"
 else
     # Sanitize the output
     sanitized_test_output=$(printf "${test_output}" | sed -n -e '/error: the following test command failed/q;p')
@@ -56,7 +56,7 @@ else
         status="fail"
     fi    
 
-    jq -n --arg output "${sanitized_test_output}" --arg status "${status}" '{version: 1, status: $status, message: $output}' > ${results_file}
+    jq -n --arg output "${sanitized_test_output}" --arg status "${status}" '{version: 1, status: $status, message: $output}' > "${results_file}"
 fi
 
 echo "${slug}: done"
