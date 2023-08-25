@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Synopsis:
 # Run the test runner on a solution.
@@ -22,7 +22,7 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
 fi
 
 slug="$1"
-test_file="test_${slug//-/_}.zig"
+test_file="$(echo "test_${slug}.zig" | tr '-' '_')"
 solution_dir=$(realpath "${2%/}")
 output_dir=$(realpath "${3%/}")
 results_file="${output_dir}/results.json"
@@ -32,14 +32,15 @@ mkdir -p "${output_dir}"
 
 echo "${slug}: testing..."
 
-pushd "${solution_dir}" > /dev/null || exit 1
+start_dir="$(pwd)"
+cd "${solution_dir}" || exit 1
 
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
 test_output=$(zig test "${test_file}" 2>&1)
 exit_code=$?
 
-popd > /dev/null || exit 1
+cd "${start_dir}" || exit 1
 
 # Write the results.json file based on the exit code of the command that was 
 # just executed that tested the implementation file
@@ -50,7 +51,7 @@ else
     sanitized_test_output=$(printf '%s' "${test_output}" | sed -n -e '/error: the following test command failed/q;p')
 
     # Try to distinguish between failing tests and errors
-    if [[ ${sanitized_test_output} =~ "error:" ]]; then
+    if echo "${sanitized_test_output}" | grep "error:"; then
         status="error"
     else
         status="fail"
