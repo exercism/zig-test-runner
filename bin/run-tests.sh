@@ -12,18 +12,20 @@
 # ./bin/run-tests.sh
 
 exit_code=0
-out_dir='/tmp'
+# Copy to a temporary directory, to avoid permission errors.
+tmp_dir='/tmp/ztr' # zig test runner
+rm -rf "${tmp_dir}"
+mkdir -p "${tmp_dir}"
+cp -r tests/* "${tmp_dir}"
 
 # Iterate over all test directories
-for test_dir in tests/*; do
+for test_dir in "${tmp_dir}"/*; do
     test_dir_name=$(basename "${test_dir}")
-    # Copy to a temporary directory, to avoid permission errors.
-    test_dir_tmp="${out_dir}/${test_dir_name}"
-    cp -r "${test_dir}" "${test_dir_tmp}"
-    results_file_path="${test_dir_tmp}/results.json"
-    expected_results_file_path="${test_dir_tmp}/expected_results.json"
+    test_dir_path=$(realpath "${test_dir}")
+    results_file_path="${test_dir_path}/results.json"
+    expected_results_file_path="${test_dir_path}/expected_results.json"
 
-    bin/run.sh "${test_dir_name}" "${test_dir_tmp}" "${test_dir_tmp}"
+    bin/run.sh "${test_dir_name}" "${test_dir_path}" "${test_dir_path}"
 
     for file in "$results_file_path" "$expected_results_file_path"; do
         # We remove nondeterministic memory locations of instructions.
@@ -36,8 +38,7 @@ for test_dir in tests/*; do
     if ! diff "${results_file_path}.tmp" "${expected_results_file_path}.tmp"; then
         exit_code=1
     fi
-
-    rm -rf "${test_dir_tmp}"
 done
 
+rm -rf "${tmp_dir}"
 exit ${exit_code}
