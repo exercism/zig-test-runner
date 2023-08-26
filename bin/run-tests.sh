@@ -12,15 +12,18 @@
 # ./bin/run-tests.sh
 
 exit_code=0
+out_dir='/tmp'
 
 # Iterate over all test directories
 for test_dir in tests/*; do
     test_dir_name=$(basename "${test_dir}")
-    test_dir_path=$(realpath "${test_dir}")
-    results_file_path="${test_dir_path}/results.json"
-    expected_results_file_path="${test_dir_path}/expected_results.json"
+    # Copy to a temporary directory, so we can mount the tests dir as read only.
+    test_dir_tmp="${out_dir}/${test_dir_name}"
+    cp -r "${test_dir}" "${test_dir_tmp}"
+    results_file_path="${test_dir_tmp}/results.json"
+    expected_results_file_path="${test_dir_tmp}/expected_results.json"
 
-    bin/run.sh "${test_dir_name}" "${test_dir_path}" "${test_dir_path}"
+    bin/run.sh "${test_dir_name}" "${test_dir_tmp}" "${test_dir_tmp}"
 
     for file in "$results_file_path" "$expected_results_file_path"; do
         # We remove nondeterministic memory locations of instructions.
@@ -34,7 +37,7 @@ for test_dir in tests/*; do
         exit_code=1
     fi
 
-    rm -f "${results_file_path}.tmp" "${expected_results_file_path}.tmp"
+    rm -rf "${test_dir_tmp}"
 done
 
 exit ${exit_code}
