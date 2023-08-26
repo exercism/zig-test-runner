@@ -17,7 +17,7 @@ out_dir='/tmp'
 # Iterate over all test directories
 for test_dir in tests/*; do
     test_dir_name=$(basename "${test_dir}")
-    # Copy to a temporary directory, so we can mount the tests dir as read only.
+    # Copy to a temporary directory, to avoid permission errors.
     test_dir_tmp="${out_dir}/${test_dir_name}"
     cp -r "${test_dir}" "${test_dir_tmp}"
     results_file_path="${test_dir_tmp}/results.json"
