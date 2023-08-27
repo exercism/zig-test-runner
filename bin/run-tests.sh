@@ -14,7 +14,7 @@
 exit_code=0
 # Copy the tests dir to a temp dir, because in the container the user lacks
 # permissions to write to the tests dir.
-tmp_dir='/tmp/ztr' # zig test runner
+tmp_dir='/tmp/exercism-zig-test-runner'
 rm -rf "${tmp_dir}"
 mkdir -p "${tmp_dir}"
 cp -r tests/* "${tmp_dir}"
