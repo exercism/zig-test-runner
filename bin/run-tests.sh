@@ -12,9 +12,15 @@
 # ./bin/run-tests.sh
 
 exit_code=0
+# Copy the tests dir to a temp dir, because in the container the user lacks
+# permissions to write to the tests dir.
+tmp_dir='/tmp/exercism-zig-test-runner'
+rm -rf "${tmp_dir}"
+mkdir -p "${tmp_dir}"
+cp -r tests/* "${tmp_dir}"
 
 # Iterate over all test directories
-for test_dir in tests/*; do
+for test_dir in "${tmp_dir}"/*; do
     test_dir_name=$(basename "${test_dir}")
     test_dir_path=$(realpath "${test_dir}")
     results_file_path="${test_dir_path}/results.json"
@@ -33,8 +39,7 @@ for test_dir in tests/*; do
     if ! diff "${results_file_path}.tmp" "${expected_results_file_path}.tmp"; then
         exit_code=1
     fi
-
-    rm -f "${results_file_path}.tmp" "${expected_results_file_path}.tmp"
 done
 
+rm -rf "${tmp_dir}"
 exit ${exit_code}
