@@ -34,6 +34,6 @@ COPY --chown=ziggy:ziggroup bin/run.sh bin/run.sh
 # Initialize a zig cache
 COPY --chown=ziggy:ziggroup tests/example-success/example_success.zig init-zig-cache/
 COPY --chown=ziggy:ziggroup tests/example-success/test_example_success.zig init-zig-cache/
-RUN zig test init-zig-cache/test_example_success.zig \
+RUN bin/run.sh example-success init-zig-cache init-zig-cache \
     && rm -rf init-zig-cache/
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
