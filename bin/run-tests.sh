@@ -12,7 +12,8 @@
 # ./bin/run-tests.sh
 
 exit_code=0
-# Copy to a temporary directory, to avoid permission errors.
+# Copy the tests dir to a temp dir, because in the container the user lacks
+# permissions to write to the tests dir.
 tmp_dir='/tmp/ztr' # zig test runner
 rm -rf "${tmp_dir}"
 mkdir -p "${tmp_dir}"
