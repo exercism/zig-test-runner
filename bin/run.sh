@@ -37,7 +37,7 @@ cd "${solution_dir}" || exit 1
 
 # Run the tests for the provided implementation file and redirect stdout and
 # stderr to capture it
-test_output=$(zig test "${test_file}" 2>&1)
+test_output=$(zig test -target x86_64-linux-musl "${test_file}" 2>&1)
 exit_code=$?
 
 cd "${start_dir}" || exit 1
