@@ -1,0 +1,28 @@
+name: Lint GitHub Actions workflows
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+
+      - name: Download actionlint
+        id: get_actionlint
+        run: |
+          # There is not yet an official action for actionlint.
+          # Adapt the suggested usage:
+          # https://github.com/rhysd/actionlint/blob/f1d409537e61/docs/usage.md#use-actionlint-on-github-actions
+          script_name='download-actionlint.bash'
+          version='f1d409537e61a3df9206bcdf8c2548e34cb9b16d'
+          url="https://raw.githubusercontent.com/rhysd/actionlint/${version}/scripts/${script_name}"
+          curl -sSf "${url}" > "${script_name}"
+          chmod +x "${script_name}"
+          ./"${script_name}"
+        shell: bash
+
+      - name: Lint workflow files
+        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        shell: bash
