@@ -12,6 +12,9 @@ jobs:
       - name: Download actionlint
         id: get_actionlint
         run: |
+          # There is not yet an official action for actionlint.
+          # Adapt the suggested usage:
+          # https://github.com/rhysd/actionlint/blob/f1d409537e61/docs/usage.md#use-actionlint-on-github-actions
           script_name='download-actionlint.bash'
           version='f1d409537e61a3df9206bcdf8c2548e34cb9b16d'
           url="https://raw.githubusercontent.com/rhysd/actionlint/${version}/scripts/${script_name}"
