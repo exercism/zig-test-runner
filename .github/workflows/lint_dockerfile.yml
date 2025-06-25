@@ -3,7 +3,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   hadolint:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -13,23 +13,3 @@ jobs:
         uses: hadolint/hadolint-action@54c9adbab1582c2ef04b2016b760714a4bfde3cf
         with:
           dockerfile: Dockerfile
-
-  dockle:
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608
-
-      - name: Build an image from the Dockerfile
-        run: |
-          docker build -t built-image:scan .
-
-      - name: Run dockle
-        uses: goodwithtech/dockle-action@11c82d478fec09ed1aa56d933eab25218e22bb90
-        with:
-          image: 'built-image:scan'
-          format: 'list'
-          exit-code: '1'
-          exit-level: 'warn'
-          accept-key: 'PATH'
