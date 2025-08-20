@@ -2,7 +2,7 @@ ARG REPO=alpine
 ARG IMAGE=3.22.1@sha256:eafc1edb577d2e9b458664a15f23ea1c370214193226069eb22921169fc7e43f
 FROM ${REPO}:${IMAGE} AS builder
 
-ARG VERSION=0.15.0
+ARG VERSION=0.15.1
 ARG RELEASE=zig-x86_64-linux-${VERSION}
 
 # We can't reliably pin the package versions on Alpine, so we ignore the linter warning.
