@@ -24,7 +24,7 @@ usage() {
 # Parse positional args, set globals consumed by later stages.
 # Sets: slug, test_file, solution_dir, output_dir, results_file.
 parse_args() {
-    [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] && usage
+    [[ -z "$1" || -z "$2" || -z "$3" ]] && usage
     slug="$1"
     test_file="$(echo "test_${slug}.zig" | tr '-' '_')"
     solution_dir=$(realpath "${2%/}")
@@ -164,15 +164,12 @@ main() {
     mkdir -p "${output_dir}"
     echo "${slug}: testing..."
 
-    run_zig_test
-
-    if [ ${exit_code} -ne 0 ] && printf '%s' "${test_output}" | grep -q "error:"; then
+    if ! test_output=$(run_zig_test) && [[ "${test_output}" = *error:* ]]; then
         emit_compile_error
     fi
 
     local tests_json overall
-    tests_json=$(build_tests_json)
-    if [ ${exit_code} -eq 0 ]; then
+    if tests_json=$(build_tests_json); then
         overall="pass"
     else
         overall="fail"
