@@ -34,18 +34,15 @@ parse_args() {
 
 # Compile and run the solution's test file, strip the solution-dir prefix
 # and the "test command failed" trailer from the output so it is portable.
-# Sets globals: test_output, exit_code.
+# Prints the sanitized output to stdout and returns zig's exit code.
 run_zig_test() {
-    local start_dir
-    start_dir="$(pwd)"
-    cd "${solution_dir}" || exit 1
-    test_output=$(zig test -target x86_64-linux-musl "${test_file}" 2>&1)
-    exit_code=$?
-    cd "${start_dir}" || exit 1
-
-    test_output=$(printf '%s' "${test_output}" \
+    local raw_output zig_exit
+    raw_output=$(cd "${solution_dir}" && zig test -target x86_64-linux-musl "${test_file}" 2>&1)
+    zig_exit=$?
+    printf '%s' "${raw_output}" \
         | sed -e "s#${solution_dir}/\{0,1\}##g" \
-              -e '/error: the following test command failed/,$d')
+              -e '/error: the following test command failed/,$d'
+    return ${zig_exit}
 }
 
 # Emit a top-level error report (compile failure) and exit successfully —
@@ -164,12 +161,15 @@ main() {
     mkdir -p "${output_dir}"
     echo "${slug}: testing..."
 
-    if ! test_output=$(run_zig_test) && [[ "${test_output}" = *error:* ]]; then
+    local any_failed=0
+    test_output=$(run_zig_test) || any_failed=1
+    if [ ${any_failed} -ne 0 ] && [[ "${test_output}" = *error:* ]]; then
         emit_compile_error
     fi
 
     local tests_json overall
-    if tests_json=$(build_tests_json); then
+    tests_json=$(build_tests_json)
+    if [ ${any_failed} -eq 0 ]; then
         overall="pass"
     else
         overall="fail"
