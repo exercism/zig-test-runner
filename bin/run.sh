@@ -42,7 +42,7 @@ run_zig_test() {
     printf '%s' "${raw_output}" \
         | sed -e "s#${solution_dir}/\{0,1\}##g" \
               -e '/error: the following test command failed/,$d'
-    return ${zig_exit}
+    return "${zig_exit}"
 }
 
 # Emit a top-level error report (compile failure) and exit successfully —
@@ -163,13 +163,13 @@ main() {
 
     local any_failed=0
     test_output=$(run_zig_test) || any_failed=1
-    if [ ${any_failed} -ne 0 ] && [[ "${test_output}" = *error:* ]]; then
+    if (( ${any_failed} )) && [[ "${test_output}" = *error:* ]]; then
         emit_compile_error
     fi
 
     local tests_json overall
     tests_json=$(build_tests_json)
-    if [ ${any_failed} -eq 0 ]; then
+    if (( ${any_failed} == 0 )); then
         overall="pass"
     else
         overall="fail"
