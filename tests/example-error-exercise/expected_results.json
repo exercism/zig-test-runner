@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "status": "fail",
+  "tests": [
+    {
+      "name": "zero steps for one",
+      "status": "pass"
+    },
+    {
+      "name": "divide if even",
+      "status": "pass"
+    },
+    {
+      "name": "even and odd steps",
+      "status": "pass"
+    },
+    {
+      "name": "large number of even and odd steps",
+      "status": "pass"
+    },
+    {
+      "name": "zero is an error",
+      "status": "fail",
+      "message": "FAIL (TestExpectedError)\n/opt/zig/lib/std/testing.zig:57:9: <MEMHASH>1 in expectError__anon_<ANON> (std.zig)\n        return error.TestExpectedError;\n        ^\ntest_example_error_exercise.zig:34:5: <MEMHASH>9 in test.zero is an error (test_example_error_exercise.zig)\n    try testing.expectError(expected, actual);\n    ^"
+    }
+  ]
+}

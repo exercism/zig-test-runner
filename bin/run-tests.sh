@@ -29,9 +29,14 @@ for test_dir in "${tmp_dir}"/*; do
     bin/run.sh "${test_dir_name}" "${test_dir_path}" "${test_dir_path}"
 
     for file in "$results_file_path" "$expected_results_file_path"; do
-        # We remove nondeterministic memory locations of instructions.
+        # We remove nondeterministic memory locations of instructions and
+        # compiler-generated anonymous function suffixes (e.g.
+        # `expectError__anon_17425`), both of which vary between builds.
         # See: https://github.com/exercism/zig-test-runner/issues/26
-        sed -E 's/0x[a-f0-9]{6}/<MEMHASH>/g' "${file}" > "${file}.tmp"
+        sed -E \
+            -e 's/0x[a-f0-9]{6}/<MEMHASH>/g' \
+            -e 's/__anon_[0-9]+/__anon_<ANON>/g' \
+            "${file}" > "${file}.tmp"
     done
 
     echo "${test_dir_name}: comparing results.json to expected_results.json"

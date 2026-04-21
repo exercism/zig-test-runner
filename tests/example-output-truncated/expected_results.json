@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "status": "fail",
+  "tests": [
+    {
+      "name": "no matches",
+      "status": "pass",
+      "output": "hello\nworld\nzombies\npants\nhello\nworld\nzombies\npants"
+    },
+    {
+      "name": "detects two anagrams",
+      "status": "fail",
+      "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:110:17: <MEMHASH>9 in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\ntest_example_output_truncated.zig:14:5: <MEMHASH>d in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1137:9: <MEMHASH>7 in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, args);\n        ^\ntest_example_output_truncated.zig:35:5: <MEMHASH>c in test.detects two anagrams (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
+      "output": "lemons\ncherry\nmelons\nexpected 2, found 0"
+    },
+    {
+      "name": "detects three anagrams",
+      "status": "fail",
+      "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:110:17: <MEMHASH>9 in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\ntest_example_output_truncated.zig:14:5: <MEMHASH>d in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1137:9: <MEMHASH>7 in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, args);\n        ^\ntest_example_output_truncated.zig:46:5: <MEMHASH>b in test.detects three anagrams (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
+      "output": "gallery\nballerina\nregally\nclergy\nlargely\nleading\nexpected 3, found 0"
+    },
+    {
+      "name": "detects anagrams case-insensitively",
+      "status": "fail",
+      "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:110:17: <MEMHASH>9 in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\ntest_example_output_truncated.zig:14:5: <MEMHASH>d in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1137:9: <MEMHASH>7 in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, args);\n        ^\ntest_example_output_truncated.zig:57:5: <MEMHASH>c in test.detects anagrams case-insensitively (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
+      "output": "cashregister\nCarthorse\nradishes\nexpected 1, found 0"
+    },
+    {
+      "name": "words are not anagrams of themselves",
+      "status": "pass",
+      "output": "BANANA\nBANANA"
+    },
+    {
+      "name": "detects many anagrams of 26-letter words",
+      "status": "fail",
+      "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:110:17: <MEMHASH>9 in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\ntest_example_output_truncated.zig:14:5: <MEMHASH>d in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1137:9: <MEMHASH>7 in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, args);\n        ^\ntest_example_output_truncated.zig:99:5: <MEMHASH>b in test.detects many anagrams of 26-letter words (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
+      "output": "ZYXWVUTSRQPONMLKJIHGFEDCBA\nMNOPQRSTUVWXYZABCDEFGHIJKL\nBADCFEHGJILKNMPORQTSVUXWZY\nQWERTYUIOPASDFGHJKLZXCVBNM\nGHIJKLMNOPQRSTUVWXYZABCDEF\nSTUVWXYZABCDEFGHIJKLMNOPQR\nDCBAEFGHIJKLMNOPQRSTUVWXYZ\nAZBYCXDWEVFUGTHSIRJQKPLOMN\nZAYXBWCVDUESFTGRHQIPJOKLNM\nNMLKJIHGFEDCBAZYXWVUTSRQPO\nBDFHJLNPRTVXZACEGIKMOQSUWY\nYWUSQOMKIGECAXZVTRPNLJHFDB\nJKLMNOPQRSTUVWXYZABCDEFGHI\nPONMLKJIHGFEDCBAZYXWVUTSRQ\nLKJIHGFEDCBAZYXWVUTSRQPONM\nCDEFGHIJKLMNOPQRSTUVWXYZAB\nEFGHIJKLMNOPQRSTUVWXYZABCD\nIJKLMNOPQRSTUVWXYZABCD [output truncated]"
+    }
+  ]
+}

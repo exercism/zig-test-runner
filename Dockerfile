@@ -21,7 +21,7 @@ FROM ${REPO}:${IMAGE} AS runner
 
 # install packages required to run the tests
 # hadolint ignore=DL3018
-RUN apk add --no-cache jq
+RUN apk add --no-cache bash jq
 
 RUN addgroup ziggroup \
     && adduser --disabled-password --gecos ziggy --ingroup ziggroup ziggy

@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "status": "pass",
+  "tests": [
+    {
+      "name": "no matches",
+      "status": "pass",
+      "output": "hello\nworld\nzombies\npants"
+    },
+    {
+      "name": "detects two anagrams",
+      "status": "pass",
+      "output": "lemons\ncherry\nmelons\nlemons\ncherry\nmelons\nlemons\ncherry\nmelons\nlemons\ncherry\nmelons"
+    },
+    {
+      "name": "detects three anagrams",
+      "status": "pass",
+      "output": "gallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading"
+    },
+    {
+      "name": "detects anagrams case-insensitively",
+      "status": "pass",
+      "output": "cashregister\nCarthorse\nradishes\ncashregister\nCarthorse\nradishes\ncashregister\nCarthorse\nradishes"
+    },
+    {
+      "name": "words are not anagrams of themselves",
+      "status": "pass",
+      "output": "BANANA"
+    },
+    {
+      "name": "detects many anagrams of 26-letter words",
+      "status": "pass",
+      "output": "ZYXWVUTSRQPONMLKJIHGFEDCBA\nMNOPQRSTUVWXYZABCDEFGHIJKL\nBADCFEHGJILKNMPORQTSVUXWZY\nQWERTYUIOPASDFGHJKLZXCVBNM\nGHIJKLMNOPQRSTUVWXYZABCDEF\nSTUVWXYZABCDEFGHIJKLMNOPQR\nDCBAEFGHIJKLMNOPQRSTUVWXYZ\nAZBYCXDWEVFUGTHSIRJQKPLOMN\nZAYXBWCVDUESFTGRHQIPJOKLNM\nNMLKJIHGFEDCBAZYXWVUTSRQPO\nBDFHJLNPRTVXZACEGIKMOQSUWY\nYWUSQOMKIGECAXZVTRPNLJHFDB\nJKLMNOPQRSTUVWXYZABCDEFGHI\nPONMLKJIHGFEDCBAZYXWVUTSRQ\nLKJIHGFEDCBAZYXWVUTSRQPONM\nCDEFGHIJKLMNOPQRSTUVWXYZAB\nEFGHIJKLMNOPQRSTUVWXYZABCD\nIJKLMNOPQRSTUVWXYZABCD [output truncated]"
+    }
+  ]
+}
