@@ -163,13 +163,13 @@ main() {
 
     local any_failed=0
     test_output=$(run_zig_test) || any_failed=1
-    if (( ${any_failed} )) && [[ "${test_output}" = *error:* ]]; then
+    if (( any_failed )) && [[ "${test_output}" = *error:* ]]; then
         emit_compile_error
     fi
 
     local tests_json overall
     tests_json=$(build_tests_json)
-    if (( ${any_failed} == 0 )); then
+    if (( any_failed == 0 )); then
         overall="pass"
     else
         overall="fail"
