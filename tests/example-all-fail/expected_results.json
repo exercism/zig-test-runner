@@ -5,47 +5,47 @@
     {
       "name": "year not divisible by 4 in common year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:7:5: <MEMHASH>a in test.year not divisible by 4 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(2015));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:7:5: <MEMHASH> in test.year not divisible by 4 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(2015));\n    ^"
     },
     {
       "name": "year divisible by 2, not divisible by 4 in common year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:11:5: <MEMHASH>a in test.year divisible by 2, not divisible by 4 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(1970));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:11:5: <MEMHASH> in test.year divisible by 2, not divisible by 4 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(1970));\n    ^"
     },
     {
       "name": "year divisible by 4, not divisible by 100 in leap year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:15:5: <MEMHASH>8 in test.year divisible by 4, not divisible by 100 in leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(1996));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:15:5: <MEMHASH> in test.year divisible by 4, not divisible by 100 in leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(1996));\n    ^"
     },
     {
       "name": "year divisible by 4 and 5 is still a leap year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:19:5: <MEMHASH>8 in test.year divisible by 4 and 5 is still a leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(1960));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:19:5: <MEMHASH> in test.year divisible by 4 and 5 is still a leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(1960));\n    ^"
     },
     {
       "name": "year divisible by 100, not divisible by 400 in common year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:23:5: <MEMHASH>a in test.year divisible by 100, not divisible by 400 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(2100));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:23:5: <MEMHASH> in test.year divisible by 100, not divisible by 400 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(2100));\n    ^"
     },
     {
       "name": "year divisible by 100 but not by 3 is still not a leap year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:27:5: <MEMHASH>a in test.year divisible by 100 but not by 3 is still not a leap year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(1900));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:27:5: <MEMHASH> in test.year divisible by 100 but not by 3 is still not a leap year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(1900));\n    ^"
     },
     {
       "name": "year divisible by 400 is leap year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:31:5: <MEMHASH>8 in test.year divisible by 400 is leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(2000));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:31:5: <MEMHASH> in test.year divisible by 400 is leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(2000));\n    ^"
     },
     {
       "name": "year divisible by 400 but not by 125 is still a leap year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:35:5: <MEMHASH>8 in test.year divisible by 400 but not by 125 is still a leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(2400));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:35:5: <MEMHASH> in test.year divisible by 400 but not by 125 is still a leap year (test_example_all_fail.zig)\n    try testing.expect(leap.leap(2400));\n    ^"
     },
     {
       "name": "year divisible by 200, not divisible by 400 in common year",
       "status": "fail",
-      "message": "/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:39:5: <MEMHASH>a in test.year divisible by 200, not divisible by 400 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(1800));\n    ^"
+      "message": "/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_all_fail.zig:39:5: <MEMHASH> in test.year divisible by 200, not divisible by 400 in common year (test_example_all_fail.zig)\n    try testing.expect(!leap.leap(1800));\n    ^"
     }
   ]
 }

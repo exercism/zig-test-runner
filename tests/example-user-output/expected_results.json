@@ -5,7 +5,7 @@
     {
       "name": "greet returns a five-letter greeting",
       "status": "fail",
-      "message": "FAIL (TestUnexpectedResult)\n/opt/zig/lib/std/testing.zig:607:14: <MEMHASH>9 in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_user_output.zig:8:5: <MEMHASH>5 in test.greet returns a five-letter greeting (test_example_user_output.zig)\n    try testing.expect(result.len == 5);\n    ^",
+      "message": "FAIL (TestUnexpectedResult)\n/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_user_output.zig:8:5: <MEMHASH> in test.greet returns a five-letter greeting (test_example_user_output.zig)\n    try testing.expect(result.len == 5);\n    ^",
       "output": "debug: computed bad greeting"
     }
   ]

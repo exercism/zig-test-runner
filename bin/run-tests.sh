@@ -34,7 +34,7 @@ for test_dir in "${tmp_dir}"/*; do
         # `expectError__anon_17425`), both of which vary between builds.
         # See: https://github.com/exercism/zig-test-runner/issues/26
         sed -E \
-            -e 's/0x[a-f0-9]{6}/<MEMHASH>/g' \
+            -e 's/0x[a-f0-9]+/<MEMHASH>/g' \
             -e 's/__anon_[0-9]+/__anon_<ANON>/g' \
             "${file}" > "${file}.tmp"
     done
