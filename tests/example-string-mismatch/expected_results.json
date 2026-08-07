@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "status": "fail",
+  "tests": [
+    {
+      "name": "sanity pass",
+      "status": "pass"
+    },
+    {
+      "name": "greeting is exactly Hello, World!",
+      "status": "fail",
+      "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:682:9: <MEMHASH> in expectEqualStrings (std.zig)\n        return error.TestExpectedEqual;\n        ^\ntest_example_string_mismatch.zig:11:5: <MEMHASH> in test.greeting is exactly Hello, World! (test_example_string_mismatch.zig)\n    try testing.expectEqualStrings(\"Hello, World!\", mod.greeting());\n    ^",
+      "output": "====== expected this output: =========\nHello, World!␃\n\n======== instead found this: =========\nGoodbye, Mars!␃\n\n======================================\nFirst difference occurs on line 1:\nexpected:\nHello, World!\n^ ('\\x48')\nfound:\nGoodbye, Mars!\n^ ('\\x47')"
+    }
+  ]
+}
