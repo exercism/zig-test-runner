@@ -68,7 +68,7 @@ emit_compile_error() {
 build_tests_json() {
     printf '%s' "${test_output}" | jq -Rs '
         def test_name: capture("test\\.(?<n>.+)\\.\\.\\.") | .n;
-        def user_output: capture("\\.\\.\\.((?<o>.+)$)") | .o // "";
+        def user_output: (capture("\\.\\.\\.(?<o>.+)$") | .o) // "";
         def is_test_line: test("[0-9]+/[0-9]+ .*\\.test\\..*\\.\\.\\.");
         def is_summary: startswith("All ") or test("[0-9]+ passed;");
         def is_ok: . == "OK" or endswith("OK");
@@ -124,7 +124,8 @@ build_tests_json() {
                 | ($header_output
                    + (if ($extra_output | length) > 0
                       then "\n" + ($extra_output | join("\n"))
-                      else "" end)) as $output
+                      else "" end)
+                   | sub("^\n"; "")) as $output
                 | if $from_status[0] | is_ok then
                     pass_record($name) | .output = $output
                 else
