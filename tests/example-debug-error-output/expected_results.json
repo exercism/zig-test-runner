@@ -1,0 +1,26 @@
+{
+  "version": 3,
+  "status": "fail",
+  "tests": [
+    {
+      "name": "passing test alongside error-like debug output",
+      "test_code": "try testing.expect(mod.greet().len == 2);",
+      "status": "pass",
+      "output": "error: greet was called with no arguments"
+    },
+    {
+      "name": "failing test alongside error-like debug output",
+      "test_code": "try testing.expect(mod.greet().len == 99);",
+      "status": "fail",
+      "message": "FAIL (TestUnexpectedResult)\n/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_debug_error_output.zig:15:5: <MEMHASH> in test.failing test alongside error-like debug output (test_example_debug_error_output.zig)\n    try testing.expect(mod.greet().len == 99);\n    ^",
+      "output": "error: greet was called with no arguments"
+    },
+    {
+      "name": "failing line carries an error-like comment",
+      "test_code": "try testing.expect(mod.greet().len == 99); // error: expected a longer greeting",
+      "status": "fail",
+      "message": "FAIL (TestUnexpectedResult)\n/opt/zig/lib/std/testing.zig:615:14: <MEMHASH> in expect (std.zig)\n    if (!ok) return error.TestUnexpectedResult;\n             ^\ntest_example_debug_error_output.zig:19:5: <MEMHASH> in test.failing line carries an error-like comment (test_example_debug_error_output.zig)\n    try testing.expect(mod.greet().len == 99); // error: expected a longer greeting\n    ^",
+      "output": "error: greet was called with no arguments"
+    }
+  ]
+}

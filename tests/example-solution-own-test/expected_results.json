@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "status": "pass",
+  "tests": [
+    {
+      "name": "a test from the exercise",
+      "test_code": "try testing.expectEqual(1, mod.value());",
+      "status": "pass",
+      "task_id": 1
+    },
+    {
+      "name": "a test the student wrote",
+      "status": "pass"
+    }
+  ]
+}

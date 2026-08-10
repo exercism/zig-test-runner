@@ -1,34 +1,40 @@
 {
-  "version": 2,
+  "version": 3,
   "status": "pass",
   "tests": [
     {
       "name": "no matches",
+      "test_code": "const expected = [_][]const u8{};\nconst word = \"diaper\";\nconst candidates = [_][]const u8{ \"hello\", \"world\", \"zombies\", \"pants\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "pass",
       "output": "hello\nworld\nzombies\npants"
     },
     {
       "name": "detects two anagrams",
+      "test_code": "const expected = [_][]const u8{ \"lemons\", \"melons\" };\nconst word = \"solemn\";\nconst candidates = [_][]const u8{ \"lemons\", \"cherry\", \"melons\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "pass",
       "output": "lemons\ncherry\nmelons\nlemons\ncherry\nmelons\nlemons\ncherry\nmelons\nlemons\ncherry\nmelons"
     },
     {
       "name": "detects three anagrams",
+      "test_code": "const expected = [_][]const u8{ \"gallery\", \"regally\", \"largely\" };\nconst word = \"allergy\";\nconst candidates = [_][]const u8{ \"gallery\", \"ballerina\", \"regally\", \"clergy\", \"largely\", \"leading\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "pass",
       "output": "gallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading\ngallery\nballerina\nregally\nclergy\nlargely\nleading"
     },
     {
       "name": "detects anagrams case-insensitively",
+      "test_code": "const expected = [_][]const u8{\"Carthorse\"};\nconst word = \"Orchestra\";\nconst candidates = [_][]const u8{ \"cashregister\", \"Carthorse\", \"radishes\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "pass",
       "output": "cashregister\nCarthorse\nradishes\ncashregister\nCarthorse\nradishes\ncashregister\nCarthorse\nradishes"
     },
     {
       "name": "words are not anagrams of themselves",
+      "test_code": "const expected = [_][]const u8{};\nconst word = \"BANANA\";\nconst candidates = [_][]const u8{\"BANANA\"};\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "pass",
       "output": "BANANA"
     },
     {
       "name": "detects many anagrams of 26-letter words",
+      "test_code": "const expected = [_][]const u8{\n    \"ZYXWVUTSRQPONMLKJIHGFEDCBA\",\n    \"MNOPQRSTUVWXYZABCDEFGHIJKL\",\n    \"BADCFEHGJILKNMPORQTSVUXWZY\",\n    \"QWERTYUIOPASDFGHJKLZXCVBNM\",\n    \"GHIJKLMNOPQRSTUVWXYZABCDEF\",\n    \"STUVWXYZABCDEFGHIJKLMNOPQR\",\n    \"DCBAEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"AZBYCXDWEVFUGTHSIRJQKPLOMN\",\n    \"ZAYXBWCVDUESFTGRHQIPJOKLNM\",\n    \"NMLKJIHGFEDCBAZYXWVUTSRQPO\",\n    \"BDFHJLNPRTVXZACEGIKMOQSUWY\",\n    \"YWUSQOMKIGECAXZVTRPNLJHFDB\",\n    \"JKLMNOPQRSTUVWXYZABCDEFGHI\",\n    \"PONMLKJIHGFEDCBAZYXWVUTSRQ\",\n    \"LKJIHGFEDCBAZYXWVUTSRQPONM\",\n    \"CDEFGHIJKLMNOPQRSTUVWXYZAB\",\n    \"EFGHIJKLMNOPQRSTUVWXYZABCD\",\n    \"IJKLMNOPQRSTUVWXYZABCDEFGH\",\n    \"OPQRSTUVWXYZABCDEFGHIJKLMN\",\n    \"UVWXYZABCDEFGHIJKLMNOPQRST\",\n};\nconst word = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &expected },\n);",
       "status": "pass",
       "output": "ZYXWVUTSRQPONMLKJIHGFEDCBA\nMNOPQRSTUVWXYZABCDEFGHIJKL\nBADCFEHGJILKNMPORQTSVUXWZY\nQWERTYUIOPASDFGHJKLZXCVBNM\nGHIJKLMNOPQRSTUVWXYZABCDEF\nSTUVWXYZABCDEFGHIJKLMNOPQR\nDCBAEFGHIJKLMNOPQRSTUVWXYZ\nAZBYCXDWEVFUGTHSIRJQKPLOMN\nZAYXBWCVDUESFTGRHQIPJOKLNM\nNMLKJIHGFEDCBAZYXWVUTSRQPO\nBDFHJLNPRTVXZACEGIKMOQSUWY\nYWUSQOMKIGECAXZVTRPNLJHFDB\nJKLMNOPQRSTUVWXYZABCDEFGHI\nPONMLKJIHGFEDCBAZYXWVUTSRQ\nLKJIHGFEDCBAZYXWVUTSRQPONM\nCDEFGHIJKLMNOPQRSTUVWXYZAB\nEFGHIJKLMNOPQRSTUVWXYZABCD\nIJKLMNOPQRSTUVWXYZABCD [output truncated]"
     }

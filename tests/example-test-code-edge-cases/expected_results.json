@@ -1,0 +1,25 @@
+{
+  "version": 3,
+  "status": "pass",
+  "tests": [
+    {
+      "name": "brace inside a string literal",
+      "test_code": "try testing.expectEqualStrings(\"}\", edge.brace());",
+      "status": "pass"
+    },
+    {
+      "name": "nested blocks keep their relative indentation",
+      "test_code": "const cfg = .{ .a = 1, .b = .{ .c = 2 } };\nif (cfg.a == 1) {\n    try testing.expectEqual(3, edge.nested());\n}",
+      "status": "pass"
+    },
+    {
+      "name": "empty body",
+      "status": "pass"
+    },
+    {
+      "name": "multiline string literal in the body",
+      "test_code": "const text =\n    \\\\line one\n    \\\\line two\n;\ntry testing.expect(text.len > 0);",
+      "status": "pass"
+    }
+  ]
+}

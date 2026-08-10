@@ -1,37 +1,43 @@
 {
-  "version": 2,
+  "version": 3,
   "status": "fail",
   "tests": [
     {
       "name": "no matches",
+      "test_code": "const expected = [_][]const u8{};\nconst word = \"diaper\";\nconst candidates = [_][]const u8{ \"hello\", \"world\", \"zombies\", \"pants\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "pass",
       "output": "hello\nworld\nzombies\npants\nhello\nworld\nzombies\npants"
     },
     {
       "name": "detects two anagrams",
+      "test_code": "const expected = [_][]const u8{ \"lemons\", \"melons\" };\nconst word = \"solemn\";\nconst candidates = [_][]const u8{ \"lemons\", \"cherry\", \"melons\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "fail",
       "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:118:17: <MEMHASH> in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\n/opt/zig/lib/std/testing.zig:83:5: <MEMHASH> in expectEqual (test_example_output_truncated.zig)\n    return expectEqualInner(T, expected, actual);\n    ^\ntest_example_output_truncated.zig:14:5: <MEMHASH> in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1124:9: <MEMHASH> in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, .{failing_allocator_inst.allocator()} ++ extra_args);\n        ^\ntest_example_output_truncated.zig:35:5: <MEMHASH> in test.detects two anagrams (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
       "output": "lemons\ncherry\nmelons\nexpected 2, found 0"
     },
     {
       "name": "detects three anagrams",
+      "test_code": "const expected = [_][]const u8{ \"gallery\", \"regally\", \"largely\" };\nconst word = \"allergy\";\nconst candidates = [_][]const u8{ \"gallery\", \"ballerina\", \"regally\", \"clergy\", \"largely\", \"leading\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "fail",
       "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:118:17: <MEMHASH> in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\n/opt/zig/lib/std/testing.zig:83:5: <MEMHASH> in expectEqual (test_example_output_truncated.zig)\n    return expectEqualInner(T, expected, actual);\n    ^\ntest_example_output_truncated.zig:14:5: <MEMHASH> in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1124:9: <MEMHASH> in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, .{failing_allocator_inst.allocator()} ++ extra_args);\n        ^\ntest_example_output_truncated.zig:46:5: <MEMHASH> in test.detects three anagrams (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
       "output": "gallery\nballerina\nregally\nclergy\nlargely\nleading\nexpected 3, found 0"
     },
     {
       "name": "detects anagrams case-insensitively",
+      "test_code": "const expected = [_][]const u8{\"Carthorse\"};\nconst word = \"Orchestra\";\nconst candidates = [_][]const u8{ \"cashregister\", \"Carthorse\", \"radishes\" };\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "fail",
       "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:118:17: <MEMHASH> in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\n/opt/zig/lib/std/testing.zig:83:5: <MEMHASH> in expectEqual (test_example_output_truncated.zig)\n    return expectEqualInner(T, expected, actual);\n    ^\ntest_example_output_truncated.zig:14:5: <MEMHASH> in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1124:9: <MEMHASH> in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, .{failing_allocator_inst.allocator()} ++ extra_args);\n        ^\ntest_example_output_truncated.zig:57:5: <MEMHASH> in test.detects anagrams case-insensitively (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
       "output": "cashregister\nCarthorse\nradishes\nexpected 1, found 0"
     },
     {
       "name": "words are not anagrams of themselves",
+      "test_code": "const expected = [_][]const u8{};\nconst word = \"BANANA\";\nconst candidates = [_][]const u8{\"BANANA\"};\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &candidates },\n);",
       "status": "pass",
       "output": "BANANA\nBANANA"
     },
     {
       "name": "detects many anagrams of 26-letter words",
+      "test_code": "const expected = [_][]const u8{\n    \"ZYXWVUTSRQPONMLKJIHGFEDCBA\",\n    \"MNOPQRSTUVWXYZABCDEFGHIJKL\",\n    \"BADCFEHGJILKNMPORQTSVUXWZY\",\n    \"QWERTYUIOPASDFGHJKLZXCVBNM\",\n    \"GHIJKLMNOPQRSTUVWXYZABCDEF\",\n    \"STUVWXYZABCDEFGHIJKLMNOPQR\",\n    \"DCBAEFGHIJKLMNOPQRSTUVWXYZ\",\n    \"AZBYCXDWEVFUGTHSIRJQKPLOMN\",\n    \"ZAYXBWCVDUESFTGRHQIPJOKLNM\",\n    \"NMLKJIHGFEDCBAZYXWVUTSRQPO\",\n    \"BDFHJLNPRTVXZACEGIKMOQSUWY\",\n    \"YWUSQOMKIGECAXZVTRPNLJHFDB\",\n    \"JKLMNOPQRSTUVWXYZABCDEFGHI\",\n    \"PONMLKJIHGFEDCBAZYXWVUTSRQ\",\n    \"LKJIHGFEDCBAZYXWVUTSRQPONM\",\n    \"CDEFGHIJKLMNOPQRSTUVWXYZAB\",\n    \"EFGHIJKLMNOPQRSTUVWXYZABCD\",\n    \"IJKLMNOPQRSTUVWXYZABCDEFGH\",\n    \"OPQRSTUVWXYZABCDEFGHIJKLMN\",\n    \"UVWXYZABCDEFGHIJKLMNOPQRST\",\n};\nconst word = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\ntry std.testing.checkAllAllocationFailures(\n    std.testing.allocator,\n    testAnagrams,\n    .{ &expected, word, &expected },\n);",
       "status": "fail",
       "message": "FAIL (TestExpectedEqual)\n/opt/zig/lib/std/testing.zig:118:17: <MEMHASH> in expectEqualInner__anon_<ANON> (std.zig)\n                return error.TestExpectedEqual;\n                ^\n/opt/zig/lib/std/testing.zig:83:5: <MEMHASH> in expectEqual (test_example_output_truncated.zig)\n    return expectEqualInner(T, expected, actual);\n    ^\ntest_example_output_truncated.zig:14:5: <MEMHASH> in testAnagrams (test_example_output_truncated.zig)\n    try testing.expectEqual(expected.len, actual.count());\n    ^\n/opt/zig/lib/std/testing.zig:1124:9: <MEMHASH> in checkAllAllocationFailures__anon_<ANON> (std.zig)\n        try @call(.auto, test_fn, .{failing_allocator_inst.allocator()} ++ extra_args);\n        ^\ntest_example_output_truncated.zig:99:5: <MEMHASH> in test.detects many anagrams of 26-letter words (test_example_output_truncated.zig)\n    try std.testing.checkAllAllocationFailures(\n    ^",
       "output": "ZYXWVUTSRQPONMLKJIHGFEDCBA\nMNOPQRSTUVWXYZABCDEFGHIJKL\nBADCFEHGJILKNMPORQTSVUXWZY\nQWERTYUIOPASDFGHJKLZXCVBNM\nGHIJKLMNOPQRSTUVWXYZABCDEF\nSTUVWXYZABCDEFGHIJKLMNOPQR\nDCBAEFGHIJKLMNOPQRSTUVWXYZ\nAZBYCXDWEVFUGTHSIRJQKPLOMN\nZAYXBWCVDUESFTGRHQIPJOKLNM\nNMLKJIHGFEDCBAZYXWVUTSRQPO\nBDFHJLNPRTVXZACEGIKMOQSUWY\nYWUSQOMKIGECAXZVTRPNLJHFDB\nJKLMNOPQRSTUVWXYZABCDEFGHI\nPONMLKJIHGFEDCBAZYXWVUTSRQ\nLKJIHGFEDCBAZYXWVUTSRQPONM\nCDEFGHIJKLMNOPQRSTUVWXYZAB\nEFGHIJKLMNOPQRSTUVWXYZABCD\nIJKLMNOPQRSTUVWXYZABCD [output truncated]"

@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "status": "fail",
+  "tests": [
+    {
+      "name": "first test passes",
+      "test_code": "try testing.expectEqual(1, mod.value());",
+      "status": "pass"
+    },
+    {
+      "name": "second test ends the process",
+      "test_code": "mod.bail();",
+      "status": "fail"
+    }
+  ]
+}

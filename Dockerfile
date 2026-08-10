@@ -21,7 +21,7 @@ FROM alpine:3.24.1@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6ee
 
 # install packages required to run the tests
 # hadolint ignore=DL3018
-RUN apk add --no-cache bash jq
+RUN apk add --no-cache bash gawk jq
 
 RUN addgroup ziggroup \
     && adduser --disabled-password --gecos ziggy --ingroup ziggroup ziggy
@@ -30,7 +30,7 @@ ENV PATH=$PATH:/opt/zig
 
 USER ziggy:ziggroup
 WORKDIR /opt/test-runner
-COPY --chown=ziggy:ziggroup bin/run.sh bin/run.sh
+COPY --chown=ziggy:ziggroup bin/run.sh bin/test-metadata.awk bin/
 # Initialize a zig cache
 COPY --chown=ziggy:ziggroup tests/example-success/example_success.zig init-zig-cache/
 COPY --chown=ziggy:ziggroup tests/example-success/test_example_success.zig init-zig-cache/
