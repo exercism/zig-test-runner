@@ -28,6 +28,7 @@ RUN addgroup ziggroup \
 COPY --from=builder --chown=ziggy:ziggroup /opt/zig/ /opt/zig/
 ENV PATH=$PATH:/opt/zig
 
+# hadolint ignore=DL3066
 USER ziggy:ziggroup
 WORKDIR /opt/test-runner
 COPY --chown=ziggy:ziggroup bin/run.sh bin/test-metadata.awk bin/
