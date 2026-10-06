@@ -29,13 +29,16 @@ for test_dir in "${tmp_dir}"/*; do
     bin/run.sh "${test_dir_name}" "${test_dir_path}" "${test_dir_path}"
 
     for file in "$results_file_path" "$expected_results_file_path"; do
-        # We remove nondeterministic memory locations of instructions and
-        # compiler-generated anonymous function suffixes (e.g.
-        # `expectError__anon_17425`), both of which vary between builds.
+        # We remove nondeterministic memory locations of instructions and of
+        # leaked allocations (printed without a `0x` prefix, e.g.
+        # `leaked [addr: 7820fd4cc140,`) and compiler-generated function
+        # instantiation suffixes (e.g. `expectError__anon_17425` or
+        # `expectError__func_957`), all of which vary between builds.
         # See: https://github.com/exercism/zig-test-runner/issues/26
         sed -E \
             -e 's/0x[a-f0-9]+/<MEMHASH>/g' \
-            -e 's/__anon_[0-9]+/__anon_<ANON>/g' \
+            -e 's/addr: [a-f0-9]+/addr: <MEMHASH>/g' \
+            -e 's/__(anon|func)_[0-9]+/__\1_<ANON>/g' \
             "${file}" > "${file}.tmp"
     done
 
