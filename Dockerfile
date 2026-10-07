@@ -2,7 +2,7 @@
 FROM alpine:3.24.1@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b AS builder
 
 
-ARG VERSION=0.16.0
+ARG VERSION=0.17.0
 ARG RELEASE=zig-x86_64-linux-${VERSION}
 
 # We can't reliably pin the package versions on Alpine, so we ignore the linter warning.
