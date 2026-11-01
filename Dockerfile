@@ -1,5 +1,5 @@
 # target = alpine-latest
-FROM alpine:3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 AS builder
+FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS builder
 
 
 ARG VERSION=0.17.0
@@ -17,7 +17,7 @@ RUN tar -xvf ${RELEASE}.tar.xz \
     && rm -rf /tmp/${RELEASE}/lib/libc/include/any-windows-any \
     && mv /tmp/${RELEASE} /opt/zig
 
-FROM alpine:3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 AS runner
+FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS runner
 
 # install packages required to run the tests
 # hadolint ignore=DL3018
