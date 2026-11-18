@@ -35,6 +35,8 @@ COPY --chown=ziggy:ziggroup bin/run.sh bin/test-metadata.awk bin/
 # Initialize a zig cache
 COPY --chown=ziggy:ziggroup tests/example-success/example_success.zig init-zig-cache/
 COPY --chown=ziggy:ziggroup tests/example-success/test_example_success.zig init-zig-cache/
-RUN bin/run.sh example-success init-zig-cache init-zig-cache \
+# Setting ZIG_GLOBAL_CACHE_DIR makes run.sh warm the image's own cache instead
+# of a copy of it.
+RUN ZIG_GLOBAL_CACHE_DIR=/home/ziggy/.cache/zig bin/run.sh example-success init-zig-cache init-zig-cache \
     && rm -rf init-zig-cache/
 ENTRYPOINT ["/opt/test-runner/bin/run.sh"]
