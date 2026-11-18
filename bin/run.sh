@@ -211,8 +211,9 @@ use_writable_cache() {
     # repo's own tests), because Zig runs the test binary from its cache.
     local copy="${HOME}/.cache/zig-copy"
     if [[ ! -d "${copy}" ]] && [[ -d "${image_cache}" ]]; then
-        cp -a "${image_cache}" "${copy}.tmp" && mv "${copy}.tmp" "${copy}" \
-            || rm -rf "${copy}.tmp"
+        if ! { cp -a "${image_cache}" "${copy}.tmp" && mv "${copy}.tmp" "${copy}"; }; then
+            rm -rf "${copy}.tmp"
+        fi
     fi
     [[ -d "${copy}" ]] && export ZIG_GLOBAL_CACHE_DIR="${copy}"
 }
