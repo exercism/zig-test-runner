@@ -195,8 +195,32 @@ assemble_report() {
     ' > "${results_file}"
 }
 
+# The image ships a Zig cache warmed at build time in ~/.cache/zig. Zig opens
+# its cache files for writing. On Docker's overlay filesystem, the first write
+# to a file from the image copies that file into the container's own layer and
+# waits for the disk, one file at a time. Doing that for the ~700 cache files
+# a run touches took about 2.4 s. Copying the whole cache into the container's
+# layer in one go takes about 0.07 s, and Zig then works on the copy.
+#
+# The copy is skipped when ZIG_GLOBAL_CACHE_DIR is already set (as it is when
+# the Dockerfile warms the cache), and reused if this container has made one.
+use_writable_cache() {
+    [[ -n "${ZIG_GLOBAL_CACHE_DIR}" ]] && return
+    local image_cache="${HOME}/.cache/zig"
+    # The copy stays out of /tmp, which may be mounted noexec (as in the
+    # repo's own tests), because Zig runs the test binary from its cache.
+    local copy="${HOME}/.cache/zig-copy"
+    if [[ ! -d "${copy}" ]] && [[ -d "${image_cache}" ]]; then
+        if ! { cp -a "${image_cache}" "${copy}.tmp" && mv "${copy}.tmp" "${copy}"; }; then
+            rm -rf "${copy}.tmp"
+        fi
+    fi
+    [[ -d "${copy}" ]] && export ZIG_GLOBAL_CACHE_DIR="${copy}"
+}
+
 main() {
     parse_args "$@"
+    use_writable_cache
     mkdir -p "${output_dir}"
     echo "${slug}: testing..."
 
