@@ -215,7 +215,14 @@ use_writable_cache() {
             rm -rf "${copy}.tmp"
         fi
     fi
-    [[ -d "${copy}" ]] && export ZIG_GLOBAL_CACHE_DIR="${copy}"
+    [[ -d "${copy}" ]] || return
+    export ZIG_GLOBAL_CACHE_DIR="${copy}"
+    # Zig trusts its cached ZIR for a standard library file only if the
+    # file's inode matches the one recorded at image build. Inodes change
+    # whenever the image is pulled onto another machine, so without this Zig
+    # parses the whole standard library again on every run (about 0.8 s).
+    # The tool writes the current inodes into the copy's ZIR headers.
+    ./bin/zir-cache refresh "${copy}" zir-cache.list || true
 }
 
 main() {
