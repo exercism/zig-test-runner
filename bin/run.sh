@@ -195,12 +195,32 @@ assemble_report() {
     ' > "${results_file}"
 }
 
+# Copy the image's cache ($1) to a new folder ($2). Most of the cache is about
+# 700 small ZIR files in z/. When they aren't in the page cache, a single cp
+# reads them one after another and waits for the disk on each one (about
+# 0.8 s). Eight cp processes wait on eight reads at a time (about 0.2 s).
+copy_cache() {
+    local from="$1" to="$2" entry
+    mkdir "${to}" || return
+    for entry in "${from}"/*; do
+        [[ "${entry}" == "${from}/z" ]] && continue
+        cp -a "${entry}" "${to}/" || return
+    done
+    mkdir "${to}/z" || return
+    # Busybox cp has no -t, so a small sh puts the destination last.
+    # shellcheck disable=SC2016 # $@ and $0 are meant for that sh.
+    find "${from}/z" -type f -print0 \
+        | xargs -0 -r -P 8 -n 100 sh -c 'cp -a "$@" "$0"' "${to}/z"
+}
+
 # The image ships a Zig cache warmed at build time in ~/.cache/zig. Zig opens
 # its cache files for writing. On Docker's overlay filesystem, the first write
 # to a file from the image copies that file into the container's own layer and
 # waits for the disk, one file at a time. Doing that for the ~700 cache files
 # a run touches took about 2.4 s. Copying the whole cache into the container's
 # layer in one go takes about 0.07 s, and Zig then works on the copy.
+#
+# The copy runs eight cp processes at once (see copy_cache).
 #
 # The copy is skipped when ZIG_GLOBAL_CACHE_DIR is already set (as it is when
 # the Dockerfile warms the cache), and reused if this container has made one.
@@ -211,7 +231,7 @@ use_writable_cache() {
     # repo's own tests), because Zig runs the test binary from its cache.
     local copy="${HOME}/.cache/zig-copy"
     if [[ ! -d "${copy}" ]] && [[ -d "${image_cache}" ]]; then
-        if ! { cp -a "${image_cache}" "${copy}.tmp" && mv "${copy}.tmp" "${copy}"; }; then
+        if ! { copy_cache "${image_cache}" "${copy}.tmp" && mv "${copy}.tmp" "${copy}"; }; then
             rm -rf "${copy}.tmp"
         fi
     fi
